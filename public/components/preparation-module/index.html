@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preparation Module - Web làm tài liệu Thu Hà</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="prep-style.css">
+
+    <!-- Áp dụng theme NGAY khi load -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header chung điều hướng -->
+    <header class="app-header">
+        <div class="header-container">
+            <a href="../../index.html" class="logo-brand">📂 Web làm tài liệu Thu Hà</a>
+            <nav class="nav-links">
+                <a href="../../index.html" class="nav-link">🏠 Trang Chủ</a>
+                <a href="../vocabulary-module/index.html" class="nav-link">📚 Flashcard</a>
+                <a href="../preparation-module/index.html" class="nav-link active">📝 Preparation</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="prep-wrapper">
+        <!-- Page title row — có nút Hướng dẫn (KHÔNG có theme) -->
+        <div class="page-title-row">
+            <h1 class="page-title">Preparation & Sentence Cards</h1>
+            <div class="page-actions">
+                <button class="btn-guide" onclick="openGuideModal()" title="Hướng dẫn sử dụng & FAQ">
+                    ❓ Hướng dẫn
+                </button>
+            </div>
+        </div>
+
+        <h2 class="prep-section-title">1. Nhập câu hoàn chỉnh & Từ khóa tìm ảnh (Tối đa 6 câu)</h2>
+        <div class="prep-inputs-grid-2col">
+            <div class="prep-input-box">
+                <div class="prep-main-row">
+                    <span class="prep-box-num">1</span>
+                    <input type="text" class="prep-text-input prep-sentence-input" placeholder="Nhập câu hoàn chỉnh số 1...">
+                </div>
+                <div class="prep-keyword-subrow">
+                    <span class="prep-arrow">→</span>
+                    <input type="text" class="prep-keyword-input" placeholder="Từ khóa tìm ảnh (Ví dụ: sports car)">
+                </div>
+            </div>
+            <div class="prep-input-box">
+                <div class="prep-main-row">
+                    <span class="prep-box-num">2</span>
+                    <input type="text" class="prep-text-input prep-sentence-input" placeholder="Nhập câu hoàn chỉnh số 2...">
+                </div>
+                <div class="prep-keyword-subrow">
+                    <span class="prep-arrow">→</span>
+                    <input type="text" class="prep-keyword-input" placeholder="Từ khóa tìm ảnh...">
+                </div>
+            </div>
+            <div class="prep-input-box">
+                <div class="prep-main-row">
+                    <span class="prep-box-num">3</span>
+                    <input type="text" class="prep-text-input prep-sentence-input" placeholder="Nhập câu hoàn chỉnh số 3...">
+                </div>
+                <div class="prep-keyword-subrow">
+                    <span class="prep-arrow">→</span>
+                    <input type="text" class="prep-keyword-input" placeholder="Từ khóa tìm ảnh...">
+                </div>
+            </div>
+            <div class="prep-input-box">
+                <div class="prep-main-row">
+                    <span class="prep-box-num">4</span>
+                    <input type="text" class="prep-text-input prep-sentence-input" placeholder="Nhập câu hoàn chỉnh số 4...">
+                </div>
+                <div class="prep-keyword-subrow">
+                    <span class="prep-arrow">→</span>
+                    <input type="text" class="prep-keyword-input" placeholder="Từ khóa tìm ảnh...">
+                </div>
+            </div>
+            <div class="prep-input-box">
+                <div class="prep-main-row">
+                    <span class="prep-box-num">5</span>
+                    <input type="text" class="prep-text-input prep-sentence-input" placeholder="Nhập câu hoàn chỉnh số 5...">
+                </div>
+                <div class="prep-keyword-subrow">
+                    <span class="prep-arrow">→</span>
+                    <input type="text" class="prep-keyword-input" placeholder="Từ khóa tìm ảnh...">
+                </div>
+            </div>
+            <div class="prep-input-box">
+                <div class="prep-main-row">
+                    <span class="prep-box-num">6</span>
+                    <input type="text" class="prep-text-input prep-sentence-input" placeholder="Nhập câu hoàn chỉnh số 6...">
+                </div>
+                <div class="prep-keyword-subrow">
+                    <span class="prep-arrow">→</span>
+                    <input type="text" class="prep-keyword-input" placeholder="Từ khóa tìm ảnh...">
+                </div>
+            </div>
+        </div>
+
+        <button type="button" id="prepCompleteBtn" class="btn-complete-prep">Tạo Thẻ Bài Hoàn Chỉnh</button>
+
+        <div style="margin-top: 40px;">
+            <h2 class="prep-section-title">2. Thẻ Bài Hoàn Chỉnh</h2>
+            <div id="prepOutcomeGrid" class="prep-outcome-grid-2col">
+                <p class="placeholder-text">Nhập câu và từ khóa ở phía trên, sau đó bấm "Tạo Thẻ Bài Hoàn Chỉnh" để xem kết quả.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Hướng Dẫn Sử Dụng & FAQ -->
+    <div id="guideModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>📖 Hướng Dẫn Sử Dụng & FAQ</h2>
+                <button class="modal-close-btn" onclick="closeGuideModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="guide-section">
+                    <h3>🚀 1. Các bước khởi tạo nhanh</h3>
+                    <div class="step-card">
+                        <span class="step-badge">1</span>
+                        <div>
+                            <strong>Nhập câu hoàn chỉnh:</strong> Điền các câu tiếng Anh cần học vào ô chính (tối đa 6 câu/lần).
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-badge">2</span>
+                        <div>
+                            <strong>Từ khóa tìm ảnh (<span style="color: var(--accent);">→</span>):</strong> Tùy chỉnh từ khóa tiếng Anh ở ô phụ bên dưới để trỏ đúng định hướng hình ảnh mong muốn. Nếu để trống, hệ thống sẽ tự lấy từ cuối cùng của câu làm từ khóa.
+                        </div>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-badge">3</span>
+                        <div>
+                            <strong>Tạo Thẻ Bài:</strong> Nhấn "Tạo Thẻ Bài Hoàn Chỉnh" để render ra danh sách thẻ bài bên dưới.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="guide-section">
+                    <h3>⚡ 2. Các tính năng nổi bật trên mỗi thẻ</h3>
+                    <ul class="feature-list">
+                        <li><b>🔍 Ảnh:</b> Bấm vào ô kính lúp bên trái thẻ để mở nhanh kết quả tìm kiếm Google Images cho từ khóa của câu đó.</li>
+                        <li><b>🔊 Nghe:</b> Phát âm thanh câu tiếng Anh chuẩn trực tiếp trên trang web.</li>
+                        <li><b>📥 Voice:</b> Tải file âm thanh câu nói về máy (tính năng đang phát triển — hiện tại sẽ phát âm thanh trực tiếp).</li>
+                        <li><b>📋 Copy:</b> Sao chép toàn bộ câu tiếng Anh vào bộ nhớ tạm chỉ với 1 cú click.</li>
+                    </ul>
+                </div>
+
+                <div class="guide-section">
+                    <h3>❓ 3. Câu hỏi thường gặp (FAQ)</h3>
+                    <div class="faq-item">
+                        <div class="faq-q">Q: Nếu để trống ô từ khóa phụ thì sao?</div>
+                        <div class="faq-a">A: Hệ thống sẽ tự động lấy <b>từ cuối cùng</b> của câu làm từ khóa tìm kiếm mặc định trên Google Images.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">Q: Làm sao để đổi ảnh khi chưa ưng ý?</div>
+                        <div class="faq-a">A: Bạn chỉ cần sửa lại từ khóa ở ô phụ <code>→</code> phía trên, rồi bấm <b>Tạo Thẻ Bài Hoàn Chỉnh</b> lại là xong.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">Q: Có giới hạn số câu không?</div>
+                        <div class="faq-a">A: Mỗi lần tạo tối đa <b>6 câu</b>. Nếu cần nhiều hơn, bạn tạo thành nhiều đợt liên tiếp.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">Q: Dữ liệu có bị mất khi tắt trang không?</div>
+                        <div class="faq-a">A: Có. Trang chạy trên bộ nhớ tạm trình duyệt. Bạn nên dùng nút <b>📋 Copy</b> hoặc lưu lại câu gốc để dùng lại sau.</div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-close" onclick="closeGuideModal()">Đã hiểu, đóng cửa sổ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="prep.js"></script>
+</body>
+</html>

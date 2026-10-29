@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web làm tài liệu Thu Hà</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Áp dụng theme NGAY khi load (tránh nháy trắng) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header chung điều hướng -->
+    <header class="app-header">
+        <div class="header-container">
+            <a href="index.html" class="logo-brand">📂 Web làm tài liệu Thu Hà</a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link active">🏠 Trang Chủ</a>
+                <a href="components/vocabulary-module/index.html" class="nav-link">📚 Flashcard</a>
+                <a href="components/preparation-module/index.html" class="nav-link">📝 Preparation</a>
+                <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Chuyển đổi giao diện Sáng / Tối">
+                    🌙
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section phong cách SaaS hiện đại -->
+    <main class="hero-wrapper">
+        <div class="hero-container-grid">
+            <div class="hero-left">
+                <div class="hero-badge">
+                    <span>✨ Nền tảng học ngôn ngữ thông minh</span>
+                </div>
+                <h1 class="hero-title">Học từ thông minh hơn, kết hợp hiệu quả hơn.</h1>
+                <p class="hero-desc">Hệ thống tích hợp Flashcard sinh động và Preparation Module giúp bạn soạn câu, tìm kiếm hình ảnh minh họa & quản lý tài liệu học tập toàn diện.</p>
+                
+                <div class="hero-cta-group">
+                    <a href="components/vocabulary-module/index.html" class="btn-primary">
+                        📚 Khám phá Flashcard
+                    </a>
+                    <a href="components/preparation-module/index.html" class="btn-secondary">
+                        📝 Bắt đầu Preparation →
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="glass-card-preview">
+                    <div class="preview-badge">⚡ Quick Preview</div>
+                    <div class="preview-line long"></div>
+                    <div class="preview-line short"></div>
+                    <div class="preview-box-container">
+                        <div class="preview-mini-box">🔍 Keyword</div>
+                        <div class="preview-mini-box accent">🔊 Audio / Voice</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-icon">📚</div>
+                <div class="stat-content">
+                    <span class="stat-number">Flashcard</span>
+                    <span class="stat-label">Ôn tập từ vựng nhanh</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">📝</div>
+                <div class="stat-content">
+                    <span class="stat-number">Preparation</span>
+                    <span class="stat-label">Soạn câu & Tìm ảnh</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-content">
+                    <span class="stat-number">Fast Sync</span>
+                    <span class="stat-label">Đồng bộ dữ liệu mượt mà</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-content">
+                    <span class="stat-number">Optimized</span>
+                    <span class="stat-label">Giao diện trực quan</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Theme toggle — chỉ trang Home mới có -->
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeToggleBtn');
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            
+            if (btn) {
+                btn.textContent = next === 'dark' ? '☀️' : '🌙';
+            }
+        }
+
+        // Cập nhật icon đúng khi load
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('themeToggleBtn');
+            if (btn) {
+                const current = document.documentElement.getAttribute('data-theme');
+                btn.textContent = current === 'dark' ? '☀️' : '🌙';
+            }
+        });
+    </script>
+</body>
+</html>

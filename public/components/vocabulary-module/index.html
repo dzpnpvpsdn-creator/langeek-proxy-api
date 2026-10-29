@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vocabulary & Flashcards</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&family=Quicksand:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</head>
+<body>
+
+    <header class="app-header">
+        <div class="header-container">
+            <a href="../../index.html" class="logo-brand">📂 Web làm tài liệu Thu Hà</a>
+            <nav class="nav-links">
+                <a href="../../index.html" class="nav-link">🏠 Trang Chủ</a>
+                <a href="../vocabulary-module/index.html" class="nav-link active">📚 Flashcard</a>
+                <a href="../preparation-module/index.html" class="nav-link">📝 Preparation</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-title-row">
+            <h1 class="page-title">Vocabulary & Flashcards</h1>
+            <div class="page-actions">
+                <button type="button" class="btn-guide" onclick="openGuideModal()" title="Hướng dẫn sử dụng & FAQ">
+                    ❓ Hướng dẫn
+                </button>
+            </div>
+        </div>
+        
+        <div class="app-layout">
+            <div class="sidebar-panel">
+
+                <!-- VOICE STUDIO -->
+                <div class="voice-studio voice-studio-highlight" id="voiceStudio">
+                    <div class="voice-studio-header">
+                        <div class="voice-studio-title">
+                            <span class="voice-studio-icon">🎙️</span>
+                            <span>Voice Studio</span>
+                        </div>
+                        <span class="voice-studio-badge" id="voiceCountBadge">0 từ</span>
+                    </div>
+
+                    <div class="voice-info-banner">
+                        ✨ Miễn phí 100% — Không cần API key. Giọng: <b>Jenny</b> (Nữ Mỹ, Neural)
+                    </div>
+
+                    <div class="voice-note-banner">
+                        💡 <b>Lưu ý:</b> Nút 🔊 chỉ để <b>nghe thử nhanh</b> (giọng trình duyệt). File tải về sẽ dùng giọng <b>Jenny chất lượng cao</b> — cùng ý nghĩa nhưng khác chất lượng.
+                    </div>
+
+                    <div class="voice-studio-body" id="voicePreviewList">
+                        <div class="voice-studio-empty">
+                            Nhập từ vựng ở dưới để xem preview
+                        </div>
+                    </div>
+
+                    <div class="voice-studio-footer">
+                        <div class="voice-folder-bar">
+                            <button type="button" id="chooseFolderBtn" class="btn-choose-folder">
+                                📁 Chọn folder lưu
+                            </button>
+                            <span id="folderName" class="folder-name-display">Chưa chọn (sẽ vào Downloads)</span>
+                        </div>
+                        <button type="button" id="downloadNextBtn" class="btn-voice-next" disabled>
+                            📥 Tải từ đầu tiên
+                        </button>
+                        <div id="voiceProgress" class="voice-progress"></div>
+                    </div>
+                </div>
+
+                <!-- DANH SÁCH TỪ VỰNG -->
+                <label for="vocabInput" class="panel-label">Danh sách từ vựng (Từ : Nghĩa)</label>
+                <textarea id="vocabInput" placeholder="cat : con mèo
+dog : con chó
+take care : chăm sóc"></textarea>
+
+                <div class="example-count-section">
+                    <div class="example-count-label">Số ví dụ mỗi thẻ:</div>
+                    <div class="example-count-group" id="exampleCountGroup">
+                        <button type="button" class="count-chip" data-value="1">1</button>
+                        <button type="button" class="count-chip active" data-value="2">2</button>
+                        <button type="button" class="count-chip" data-value="3">3</button>
+                    </div>
+                </div>
+
+                <div class="sidebar-btn-row">
+                    <button type="button" id="processBtn">Tạo Flashcards</button>
+                    <button type="button" id="clearBtn" title="Xóa hết dữ liệu đã lưu">🗑️</button>
+                </div>
+                <div id="warningMsg" class="warning-container"></div>
+            </div>
+
+            <div>
+                <div id="lastGeneratedInfo" class="last-generated-info"></div>
+                <div class="flashcard-grid" id="flashcardContainer">
+                    <p class="placeholder-text">Nhập từ vựng ở góc bên trái để bắt đầu tạo thẻ bài.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL HƯỚNG DẪN CHÍNH -->
+    <div id="guideModal" class="modal-overlay">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>📖 Hướng Dẫn Sử Dụng & FAQ</h2>
+                <button type="button" class="modal-close-btn" onclick="closeGuideModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="guide-section">
+                    <h3>🚀 1. Các bước khởi tạo nhanh</h3>
+                    <div class="step-card">
+                        <span class="step-badge">1</span>
+                        <div><strong>Nhập từ vựng:</strong> Nhập danh sách theo định dạng <code>Từ : Nghĩa</code>.</div>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-badge">2</span>
+                        <div><strong>Chọn số ví dụ:</strong> Bấm <b>1</b>, <b>2</b>, hoặc <b>3</b>.</div>
+                    </div>
+                    <div class="step-card">
+                        <span class="step-badge">3</span>
+                        <div><strong>Tạo Flashcards:</strong> Bấm <b>Tạo Flashcards</b> để tạo thẻ bài với ảnh + ví dụ.</div>
+                    </div>
+                </div>
+                <div class="guide-section">
+                    <h3>🎙️ 2. Voice Studio — Tải file MP3</h3>
+                    <ul class="feature-list">
+                        <li><b>Miễn phí 100%:</b> Không cần API key, dùng Microsoft Edge TTS.</li>
+                        <li><b>Giọng:</b> Jenny (Nữ Mỹ) — tự nhiên, chất lượng cao.</li>
+                        <li><b>Chọn folder 1 lần:</b> Bấm <b>📁 Chọn folder</b> để chọn nơi lưu. Tất cả file sau đó ghi vào folder đó.</li>
+                        <li><b>Tải từng từ:</b> Mỗi lần bấm <b>Tải tiếp</b> sẽ tải 1 từ.</li>
+                        <li><b>Lưu trạng thái:</b> Từ đã tải hiện ✅ — reload trang vẫn nhớ.</li>
+                    </ul>
+                </div>
+                <div class="guide-section">
+                    <h3>🔊 Lưu ý về nút "Nghe thử"</h3>
+                    <div class="key-guide-warning">
+                        <div class="key-guide-warning-icon">💡</div>
+                        <div>
+                            Nút <b>🔊 Nghe thử</b> chỉ để nghe nhanh bằng <b>giọng trình duyệt</b>.<br>
+                            File <b>MP3 tải về</b> sẽ dùng giọng <b>Jenny chất lượng cao</b> (Microsoft Neural).<br>
+                            👉 <b>Nội dung đọc giống nhau</b>, chỉ khác chất lượng âm thanh.
+                        </div>
+                    </div>
+                </div>
+                <div class="guide-section">
+                    <h3>❓ 3. FAQ</h3>
+                    <div class="faq-item">
+                        <div class="faq-q">Q: Có cần đăng ký gì không?</div>
+                        <div class="faq-a">A: Không. Hoàn toàn miễn phí, không cần key, không cần tài khoản.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">Q: Tải nhiều có bị reload không?</div>
+                        <div class="faq-a">A: Không. Chọn folder 1 lần → các file sau ghi trực tiếp vào folder đó, không có popup → không reload.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-q">Q: Proxy là gì? Cần chạy không?</div>
+                        <div class="faq-a">A: Proxy chạy local, cần bật bằng <code>npm start</code> trong thư mục <code>langeek-proxy</code>.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn-modal-close" onclick="closeGuideModal()">Đã hiểu, đóng cửa sổ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="audio-zip.js"></script>
+    <script src="script.js?v=4"></script>
+</body>
+</html>

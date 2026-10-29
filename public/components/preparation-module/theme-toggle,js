@@ -1,0 +1,38 @@
+// ==========================================
+// THEME TOGGLE — dùng chung cho các module
+// Tự động đồng bộ theme qua localStorage
+// ==========================================
+
+// 1. Áp dụng theme NGAY LẬP TỨC (trước khi DOM render xong)
+(function applyThemeImmediately() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
+
+// 2. Hàm toggle — gọi được từ bất kỳ đâu (onclick hoặc addEventListener)
+function toggleTheme() {
+    const html = document.documentElement;
+    const current = html.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+    
+    // Cập nhật icon nút nếu có
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) {
+        themeBtn.textContent = next === 'dark' ? '☀️' : '🌙';
+    }
+}
+
+// 3. Khi DOM ready: cập nhật icon ban đầu + gắn sự kiện click
+document.addEventListener('DOMContentLoaded', function() {
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) {
+        const current = document.documentElement.getAttribute('data-theme');
+        themeBtn.textContent = current === 'dark' ? '☀️' : '🌙';
+        
+        // Gắn sự kiện click — đảm bảo luôn hoạt động dù HTML không có onclick
+        themeBtn.addEventListener('click', toggleTheme);
+    }
+});
